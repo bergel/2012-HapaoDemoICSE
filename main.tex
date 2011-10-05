@@ -1,0 +1,306 @@
+%%%%%%%%%%%%%
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%\documentclass[runningheads]{llncs}
+%\documentclass[10pt,letterpaper,twocolumn]{article}
+\documentclass{sig-alternate}
+
+
+% packages
+\usepackage{xspace}
+\usepackage{ifthen}
+\usepackage{amsbsy}
+\usepackage{amssymb}
+\usepackage{balance}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{needspace}
+\usepackage{microtype}
+\usepackage{bold-extra}
+\usepackage{subfigure}
+\usepackage{wrapfig}
+
+
+% constants
+\newcommand{\Title}{Test Coverage With Hapao}
+\newcommand{\TitleShort}{\Title}
+\newcommand{\Authors}{Vanessa Pe\~na Araya, Alexandre Bergel}
+\newcommand{\AuthorsShort}{V. Pe\~na, A. Bergel}
+
+% references
+\usepackage[colorlinks]{hyperref}
+\usepackage[all]{hypcap}
+\setcounter{tocdepth}{2}
+\hypersetup{
+	colorlinks=true,
+	urlcolor=black,
+	linkcolor=black,
+	citecolor=black,
+	plainpages=false,
+	bookmarksopen=true,
+	pdfauthor={\Authors},
+	pdftitle={\Title}}
+
+\def\chapterautorefname{Chapter}
+\def\appendixautorefname{Appendix}
+\def\sectionautorefname{Section}
+\def\subsectionautorefname{Section}
+\def\figureautorefname{Figure}
+\def\tableautorefname{Table}
+\def\listingautorefname{Listing}
+
+% source code
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{listings}
+\definecolor{source}{gray}{0.9}
+\lstset{
+	language={},
+	% characters
+	tabsize=3,
+	upquote=true,
+	escapechar={!},
+	keepspaces=true,
+	breaklines=true,
+	alsoletter={\#:},
+	breakautoindent=true,
+	columns=fullflexible,
+	showstringspaces=false,
+	basicstyle=\footnotesize\sffamily,
+	% background
+	frame=single,
+    framerule=0pt,
+	backgroundcolor=\color{source},
+	% numbering
+	numbersep=5pt,
+	numberstyle=\tiny,
+	numberfirstline=true,
+	% captioning
+	captionpos=b,
+	% formatting (html)
+	moredelim=[is][\textbf]{<b>}{</b>},
+	moredelim=[is][\textit]{<i>}{</i>},
+	moredelim=[is][\color{red}\uwave]{<u>}{</u>},
+	moredelim=[is][\color{red}\sout]{<del>}{</del>},
+	moredelim=[is][\color{blue}\underline]{<ins>}{</ins>}}
+\newcommand{\ct}{\lstinline[backgroundcolor=\color{white},basicstyle=\footnotesize\ttfamily]}
+\newcommand{\lct}[1]{{\small\tt #1}}
+
+% tikz
+% \usepackage{tikz}
+% \usetikzlibrary{matrix}
+% \usetikzlibrary{arrows}
+% \usetikzlibrary{external}
+% \usetikzlibrary{positioning}
+% \usetikzlibrary{shapes.multipart}
+% 
+% \tikzset{
+% 	every picture/.style={semithick},
+% 	every text node part/.style={align=center}}
+
+% proof-reading
+\usepackage{xcolor}
+\usepackage[normalem]{ulem}
+\newcommand{\ra}{$\rightarrow$}
+\newcommand{\ugh}[1]{\textcolor{red}{\uwave{#1}}} % please rephrase
+\newcommand{\ins}[1]{\textcolor{blue}{\uline{#1}}} % please insert
+\newcommand{\del}[1]{\textcolor{red}{\sout{#1}}} % please delete
+\newcommand{\chg}[2]{\textcolor{red}{\sout{#1}}{\ra}\textcolor{blue}{\uline{#2}}} % please change
+\newcommand{\chk}[1]{\textcolor{ForestGreen}{#1}} % changed, please check
+
+% comments \nb{label}{color}{text}
+\newboolean{showcomments}
+\setboolean{showcomments}{true}
+\ifthenelse{\boolean{showcomments}}
+	{\newcommand{\nb}[3]{
+		{\colorbox{#2}{\bfseries\sffamily\scriptsize\textcolor{white}{#1}}}
+		{\textcolor{#2}{\sf\small$\blacktriangleright$\textit{#3}$\blacktriangleleft$}}}
+	 \newcommand{\version}{\emph{\scriptsize$-$Id$-$}}}
+	{\newcommand{\nb}[2]{}
+	 \newcommand{\version}{}}
+\newcommand{\rev}[2]{\nb{Reviewer #1}{red}{#2}}
+\newcommand{\ab}[1]{\nb{Alexandre}{blue}{#1}}
+\newcommand{\vp}[1]{\nb{Vanessa}{orange}{#1}}
+
+% graphics: \fig{position}{percentage-width}{filename}{caption}
+\DeclareGraphicsExtensions{.png,.jpg,.pdf,.eps,.gif}
+\graphicspath{{figures/}}
+\newcommand{\fig}[4]{
+	\begin{figure}[#1]
+		\centering
+		\includegraphics[width=#2\textwidth]{#3}
+		\caption{\label{fig:#3}#4}
+	\end{figure}}
+
+\newcommand{\largefig}[4]{
+	\begin{figure*}[#1]
+		\centering
+		\includegraphics[width=#2\textwidth]{#3}
+		\caption{\label{fig:#3}#4}
+	\end{figure*}}
+	
+\newcommand{\wrapfig}[5]{	
+\begin{wrapfigure}{#1}{#2\textwidth}
+  \begin{center}
+    \includegraphics[width=#3\textwidth]{#4}
+  \end{center}
+  \caption{\label{fig:#4}#5}
+\end{wrapfigure}}
+
+% abbreviations
+\newcommand{\ie}{\emph{i.e.,}\xspace}
+\newcommand{\eg}{\emph{e.g.,}\xspace}
+\newcommand{\etc}{\emph{etc.}\xspace}
+\newcommand{\etal}{\emph{et al.}\xspace}
+
+% lists
+\newenvironment{bullets}[0]
+	{\begin{itemize}}
+	{\end{itemize}}
+
+\newcommand{\seclabel}[1]{\label{sec:#1}}
+\newcommand{\figlabel}[1]{\label{fig:#1}}
+\newcommand{\figref}[1]{Figure~\ref{fig:#1}}
+\newcommand{\secref}[1]{Section~\ref{sec:#1}}
+
+
+%Specialized macros
+\newcommand{\hapao}{Hapao\xspace}
+\newcommand{\Hapao}{Hapao\xspace}
+\pagenumbering{arabic}
+
+\begin{document}
+
+\title{\Title}
+%\titlerunning{\TitleShort}
+
+\author{\Authors\\[3mm]
+Department of Computer Science (DCC)\\ University of Chile, Santiago, Chile\\[1 ex]
+} 
+%\authorrunning{\AuthorsShort}
+
+\maketitle
+
+\emph{This paper uses colored figures. Though colors are not mandatory for full understanding, we recommend a colored printout.\\}
+
+\begin{abstract}
+Testing is an essential activity when developing software. It is widely acknowledged that a test coverage above 70\% is associated with a decrease in reported failures. Coverage tools output after running the unit tests the list of classes and methods that are not executed. Simply tagging a software element as covered may convey an incorrect sense of necessity: executing a long and complex method just once is potentially enough to be 100\% test-covered. As a result, a developer may have an incorrect judgement on where to focus testing effort.
+
+We present test blueprint, a visual tool to help practitioners assess and increase test coverage by graphically relating execution and complexity metrics.
+\end{abstract}
+
+\section{Test Coverage}\seclabel{introduction}
+
+Any respectable software engineering book will argue that testing is an essential and central activity that has to be continuously exercised when producing software. Numerous frameworks are available for that purpose, including xUnit and TestTypes\footnote{From Microsoft: \url{http://bit.ly/f2zzEl}}, just to name a few.
+
+%\begin{quote}
+%\emph{``Having lots of good tests and running them regularly is one of the things that allows for more flexibility and keeps things from spinning out of control''} -- Dale Henrichs, VMWare
+%
+%\emph{``You know a respectable programmer by the test he/she writes''} -- Tudor Girba, Netstyle.ch
+%\end{quote}
+
+
+
+%We commonly refer to the term \emph{test coverage} the application elements that are executed when running its associated tests.
+
+A kind of quality assurance comes from testing and the use of metrics gives a quantitative measure of quality. \emph{Test coverage}, one popular  metric, is concerned with determining what proportion of a defined piece of computer code is  executed during a testing cycle. 
+Test coverage is commonly reported as the proportion of packages, classes, methods and lines of code that are executed by the tests. 
+A software that is well tested is commonly associated with a test coverage of 70\%-80\%~\cite{Mock09a}. %Above this range, increasing statement coverage becomes difficult and not necessarily cost effective~\cite{Piwo93a,Mock09a}. %Associating the test coverage to a set of numerical values may be the source of various problems. 
+%It has been multiply shown that increasing the test coverage is associated with a decrease in reported software problems~\cite{Piwo93a,Mock09a}.
+
+
+%One important question in software testing is identifying the criterion that defines what constitute an adequate test. 
+The criteria that are commonly used are statement coverage, branch coverage, and path coverage~\cite{Hong97a}. 
+Identifying uncovered statements, branches and paths indicate where the test effort has to focus on next.
+
+\textit{A surprising fact from common test coverage criteria is that all the software elements considered when assessing a test coverage have the same relevance.} A method, a statement or a branch is simply labelled as covered or not, and thus, independently if these syntactic elements are complex or not, dependent on other elements, or if they are exercised in many different situations.
+As a consequence, statement, branch and path coverage say that executing a method only once is enough to label it as 100\%-covered. This is clearly inadequate in case of a complex or important method because indicating a full coverage gives the wrong signal to the developer.
+This paper is about fixing this situation by proposing an effective visual representation.
+
+The intuition explored in this paper is that if a ``complex and useful'' piece of software is tested in many ``different situations'', then it is probably well tested. On the contrary, if a ``complex code'' is executed ``too few times'', then it is probably under tested. This takes on a fairly different stance from classical code coverage tools since we are not interested only on whether each instruction and branch of the code has been executed, but whether or not it has been \emph{sufficiently} executed in different situations. We have identified five patterns to efficiently drive a test coverage assessment and increase effort.
+
+Most approaches to testing use branch coverage to decide on the quality of a program test suite~\cite{Hong97a}.
+Test Blueprint takes a different stance by favoring visual patterns over coverage formal model. 
+%It has been shown that branch coverage is not always synonym to test quality~\cite{Wei10a}. 
+
+Test blueprint is a polymetric view~\cite{Lanz03d,Berg10c} has been implemented in \hapao\footnote{\url{http://hapao.dcc.uchile.cl}}, a test code coverage for Pharo. Pharo\footnote{\url{http://www.pharo-project.org}} is an emerging object-oriented programming language that is very similar to Smalltalk, syntactically simple, and has a minimal core. We have used Test Blueprint to increase the coverage of a number of applications; the following illustrates our points on two case studies.
+
+%: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\section{Test Blueprint}\seclabel{testblueprint}
+
+
+\fig{}{0.5}{testBlueprint}{Test blueprint description.}
+
+Test Blueprint is a visual aid for practitioners to assess and increase the test coverage of their applications. 
+Before showing Test Blueprint on a real world example, we first introduce the visualization on a small but representative example, given in \autoref{fig:testBlueprint}.
+
+Large boxes represents classes (\ct{C1}, \ct{C2} and \ct{T}). Inheritance is indicated with a connecting line between classes. Subclasses are below their superclass. \ct{C1} is the superclass of \ct{C2}. The superclass of \ct{C1} is not part of the analysis. 
+
+Inner boxes represent methods. \ct{C1} defines five methods, \ct{a, b, c, d} and \ct{e}. \ct{C2} defines one method, \ct{f}. Each method is represented as a small box, visually defined along fives dimensions:
+
+\begin{itemize}
+\item height is the cyclomatic complexity of the method. As the method may take different paths at execution time, the higher the box will be (\eg Method \ct{b}). The minimal visual representation of a method is a 5 x 5 square. A method with an empty body is therefore represented as such.
+\item width is the number of different methods that call the method when running the tests. A wide method (\ct{f}) means the method has been executed by many different methods. A thin method (\ct{a}, \ct{b}, \ct{c}) means the method has been executed zero or few times.
+\item gray intensity reflects the number of times the method has been executed. A dark method (\ct{d}, \ct{f}) has been executed many times. A light-toned method (\ct{c}) has been executed a few times.
+\item a red border color (light gray on a B\&W printout) means the method has not been tested (\ie executed by the tests) (\ct{a}, \ct{b}). A blue border indicates abstract methods. A green border indicates that the method is a test method, defined in a unit test. Note that a unit test may contain methods that are not test methods; utility methods for example.
+
+\item the call-flow on the \ct{self} variable is indicated with edges between methods. This happens if the body of \ct{a} contains the expression \ct{self d}, meaning that the message \ct{d} is sent to self. The methods \ct{a} calls \ct{d} on \ct{self}. The method \ct{b} calls \ct{d} and \ct{c} on \ct{self}. Note that we are focusing on the \emph{call-flow} instead of the \emph{control-flow}. The call-flow is scoped to the class. Call-flow is statically determined from the abstract syntax tree of the method.  Calling methods are located above the called methods (\eg \ct{a} is above \ct{d}). 
+\end{itemize}
+
+Each choice made for the design of test blueprint is justified in the following sections. %More information about the call-flow may be found in \secref{discussion}.
+
+%========
+\subsection{Coverage evolution}
+
+We have undertaken a major effort to increase the coverage of the Moose test suite\footnote{\url{http://www.moosetechnology.org}}. 
+
+\largefig{}{1}{BigPictureCovered}{Evolution of the \ct{MooseElement} class hierarchy.}
+
+\figref{BigPictureCovered} shows the evolution between the version 13 of the core test suite, before we started our coverage increase, and the version 48 of the test suite, after our effort. Version 13 comprises 15 unit tests and 176 test methods, which covered 63.54\% of the package \ct{Moose-Core}.  Version 48 of the test suite raises the figures to 23 unit tests, 252 test methods, totaling a coverage of 86.07\%.
+
+The \ct{MooseElement} class hierarchy has evolved during our effort. Producing new unit tests offers the opportunity to reconsider the relevance of each uncovered method: meaningless and obsolete code is removed. We started our effort with the version 313 of the package Moose-Core. This package comprises of 27 classes and 467 methods. The version 326 is cleaner, which comprises of 26 classes and 440 methods.
+%(PackageInfo named: 'Moose-Core') methods size 
+
+%========
+\subsection{Complexity reduction}\seclabel{complexityReduction}
+
+The internal representation of a class offered by Test Blueprint is effective at guiding a complexity reduction effort.
+
+\largefig{}{0.5}{ReducingComplexity1}{Complexity reduction in MetacelloBrowser.}
+
+\figref{ReducingComplexity1} shows the evolution of a central class in the MetacelloBrowser application\footnote{\url{http://www.squeaksource.com/MetacelloBrowser.html}}. While we were increasing the coverage of the application, we exercised a number of code refactorings and dead code removal. Version 1.58.1 on the left-hand side contains 69 methods, where only 28 are covered (painted in gray), representing a coverage of 40.57\%.  This version contains a very tall uncovered method. This method is much more complex than others because of its size (it has a cyclomatic complexity of 15 whereas other methods have a complexity ranging from 2 to 7). 
+
+Version 1.58.9 on the right-hand side contains 66 methods, where 40 are covered, bringing the coverage to 60.60\%. The complex method has been cut down into pieces, shorter in length and easier to test. 
+
+%========
+
+\section{Hapao}
+
+Test blueprint is implemented in Hapao, a test code coverage tool implemented in the Pharo programming language. \hapao is designed to consider each of the requirements given above. 
+
+\largefig{}{0.5}{Hapao.png}{Hapao main window.}
+
+\figref{Hapao.png} is a screenshot of Hapao. The window title shows the version of the application being visualized. The tool bar contains a number of options for exporting; zooming; running the tests; getting statistics; opening a new window on the same software; getting help. Right-clicking on a class opens a menu with navigations options.
+
+
+%: % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+%\section{Conclusion}\seclabel{conclusion}
+%Test Blueprint is an effective and intuitive visual representation of the test coverage. It provides valuable help to practitioners in chosing their next target when increasing a test coverage. Test Blueprint is offered by the Hapao test coverage tool, freely available for the Pharo programming language.
+%The key point of our work is to use a combination of three metrics as test coverage criterion. As far as we are aware of, such a stance has not been considered by any of the available test coverage tools, independently of the programming language considered. 
+%
+%\paragraph{Acknowledgment} We thank Laurent Laffont and Christian Eduardo Palomares Peralta for their comments on an early draft of the paper. We also thank Tudor Doru Girba for monitoring our test coverage effort for the Moose case study.
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+%\appendix
+%\section{Complete Blueprint}
+
+%{\small
+\bibliographystyle{plain}
+\bibliography{scg,hapao}
+%\bibliography{hapao}
+%}
+
+\end{document}
+
